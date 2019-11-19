@@ -18,7 +18,7 @@ main:
     auto-update:
       enabled: false
 
-Reboot add the display should be working:)
+Reboot and the display should be working:)
 
 Key bindings:
  5 - Sleep or wake up screen
