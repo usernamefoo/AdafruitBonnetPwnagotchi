@@ -1,0 +1,48 @@
+diff -ruN pwnagotchi/pwnagotchi/ui/display.py bonnet/pwnagotchi/ui/display.py
+--- pwnagotchi/pwnagotchi/ui/display.py	2019-11-19 11:29:33.586415195 -0800
++++ bonnet/pwnagotchi/ui/display.py	2019-11-18 22:16:14.000000000 -0800
+@@ -61,6 +61,9 @@
+     def is_spotpear24inch(self):
+         return self._implementation.name == 'spotpear24inch'
+ 
++    def is_bonnet(self):
++        return self._implementation.name == 'bonnet'
++
+     def is_waveshare_any(self):
+         return self.is_waveshare_v1() or self.is_waveshare_v2()
+ 
+diff -ruN pwnagotchi/pwnagotchi/ui/hw/__init__.py bonnet/pwnagotchi/ui/hw/__init__.py
+--- pwnagotchi/pwnagotchi/ui/hw/__init__.py	2019-11-19 11:29:33.586415195 -0800
++++ bonnet/pwnagotchi/ui/hw/__init__.py	2019-11-18 22:18:56.000000000 -0800
+@@ -10,6 +10,7 @@
+ from pwnagotchi.ui.hw.waveshare154inch import Waveshare154inch
+ from pwnagotchi.ui.hw.waveshare213d import Waveshare213d
+ from pwnagotchi.ui.hw.spotpear24inch import Spotpear24inch
++from pwnagotchi.ui.hw.bonnet import Bonnet
+ 
+ def display_for(config):
+     # config has been normalized already in utils.load_config
+@@ -47,4 +48,8 @@
+         return Waveshare213d(config)
+ 
+     elif config['ui']['display']['type'] == 'spotpear24inch':
+-        return Spotpear24inch(config)
+\ No newline at end of file
++        return Spotpear24inch(config)
++
++    elif config['ui']['display']['type'] == 'bonnet':
++        return Bonnet(config)
++
+diff -ruN pwnagotchi/pwnagotchi/utils.py bonnet/pwnagotchi/utils.py
+--- pwnagotchi/pwnagotchi/utils.py	2019-11-19 11:29:33.606415376 -0800
++++ bonnet/pwnagotchi/utils.py	2019-11-18 22:20:24.000000000 -0800
+@@ -115,6 +115,9 @@
+     elif config['ui']['display']['type'] in ('spotpear24inch'):
+         config['ui']['display']['type'] = 'spotpear24inch'
+ 
++    elif config['ui']['display']['type'] in ('bonnet'):
++        config['ui']['display']['type'] = 'bonnet'
++
+     else:
+         print("unsupported display type %s" % config['ui']['display']['type'])
+         exit(1)
